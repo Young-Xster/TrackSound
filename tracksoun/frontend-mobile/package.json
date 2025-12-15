@@ -1,0 +1,31 @@
+{
+  "name": "tracksoun-mobile",
+  "version": "1.0.0",
+  "description": "Mobile application for Tracksoun, a music streaming app using YouTube as a source.",
+  "main": "App.js",
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "17.0.2",
+    "react-native": "0.64.2",
+    "react-navigation": "^4.4.4",
+    "react-navigation-stack": "^1.10.3",
+    "axios": "^0.21.1",
+    "react-native-async-storage/async-storage": "^1.15.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.66.2"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "license": "MIT"
+}

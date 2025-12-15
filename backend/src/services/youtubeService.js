@@ -1,21 +1,39 @@
+const YouTube = require("youtube-sr").default;
+const ytdl = require("ytdl-core");
+
 module.exports = {
-    searchTracks: async (query) => {
-        // Function to search for tracks on YouTube using the YouTube API
-        // Implement API call to YouTube with the search query
-    },
-
-    getTrackDetails: async (videoId) => {
-        // Function to retrieve detailed information about a specific track using its YouTube video ID
-        // Implement API call to YouTube to get track details
-    },
-
-    getPlaylistTracks: async (playlistId) => {
-        // Function to retrieve all tracks from a specific YouTube playlist
-        // Implement API call to YouTube to get tracks in the playlist
-    },
-
-    extractVideoId: (url) => {
-        // Function to extract the YouTube video ID from a given URL
-        // Implement logic to parse the URL and return the video ID
+  searchTracks: async (query) => {
+    try {
+      const videos = await YouTube.search(query, { limit: 10, type: "video" });
+      return videos.map((video) => ({
+        youtubeId: video.id,
+        title: video.title,
+        artist: video.channel ? video.channel.name : "Unknown",
+        thumbnailUrl: video.thumbnail ? video.thumbnail.url : "",
+        duration: video.duration / 1000, // Convert ms to seconds
+      }));
+    } catch (error) {
+      console.error("YouTube Search Error:", error);
+      throw new Error("Failed to search YouTube");
     }
+  },
+
+  streamAudio: async (videoId, res) => {
+    try {
+      const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+      // Get audio formats
+      const info = await ytdl.getInfo(videoUrl);
+      const format = ytdl.chooseFormat(info.formats, {
+        quality: "highestaudio",
+        filter: "audioonly",
+      });
+
+      // Pipe the stream to the response
+      ytdl(videoUrl, { format: format }).pipe(res);
+    } catch (error) {
+      console.error("YouTube Stream Error:", error);
+      throw new Error("Failed to stream audio");
+    }
+  },
 };

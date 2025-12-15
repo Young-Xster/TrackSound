@@ -1,10 +1,10 @@
 const User = require('../models/User');
 
-// Retrieve user profile
+
 exports.getUserProfile = async (req, res) => {
     try {
-        const userId = req.user.id; // Assuming user ID is stored in req.user
-        const user = await User.findById(userId).select('-password'); // Exclude password from response
+        const userId = req.user.id;
+        const user = await User.findById(userId).select('-password'); 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -14,11 +14,10 @@ exports.getUserProfile = async (req, res) => {
     }
 };
 
-// Update user profile
 exports.updateUserProfile = async (req, res) => {
     try {
-        const userId = req.user.id; // Assuming user ID is stored in req.user
-        const updates = req.body; // Get updates from request body
+        const userId = req.user.id; 
+        const updates = req.body;
         const user = await User.findByIdAndUpdate(userId, updates, { new: true, runValidators: true }).select('-password');
         if (!user) {
             return res.status(404).json({ message: 'User not found' });

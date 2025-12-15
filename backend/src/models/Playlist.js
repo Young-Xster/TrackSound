@@ -7,13 +7,13 @@ const playlistSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Links to the User model
+    ref: "User",
     required: true,
   },
   tracks: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Track", // Array of links to Track model
+      ref: "Track",
     },
   ],
   isPublic: {
